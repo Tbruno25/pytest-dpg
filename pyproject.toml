@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "pytest-dpg"
+version = "0.1.0"
+description = ""
+authors = ["TJ <tbruno25@gmail.com>"]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+dearpygui = "^1.11.1"
+pyautogui = "^0.9.54"
+multiprocess = "^0.70.16"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.plugins.pytest11]
+pytest-dpg = "pytest_dpg.plugin"
+
+
+[tool.mypy]
+ignore_missing_imports = true
