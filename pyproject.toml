@@ -1,0 +1,49 @@
+[project]
+name = "pytest-dpg"
+version = "0.1.1"
+description = """
+pytest-dpg is a pytest plugin for testing Dear PyGui (DPG) applications. \
+"""
+authors = [
+    { name = "TJ", email = "tbruno25@gmail.com" }
+]
+dependencies = [
+    "dearpygui>=1.11.1",
+    "pyautogui>=0.9.54",
+    "multiprocess>=0.70.16",
+]
+readme = "README.md"
+requires-python = ">=3.10, <4.0"
+classifiers = [
+    "Framework :: Pytest",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: User Interfaces",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Utilities",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.entry-points.pytest11]
+pytest-dpg = "pytest_dpg.plugin"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.3.2",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pytest_dpg"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D", "EM102", "ANN401", "TRY003"]
