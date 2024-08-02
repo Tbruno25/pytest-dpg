@@ -1,4 +1,6 @@
 import queue
+import textwrap
+import traceback
 from collections.abc import Callable
 from typing import Any
 from unittest.mock import patch
@@ -18,11 +20,24 @@ from pytest_dpg.dpg_helpers import (
 )
 
 
+class ReceiverError(Exception):
+    def __init__(self, message: str, traceback: str | None = None):
+        self.message = message
+        self.traceback = traceback
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f"{self.message}\n\nOriginal traceback:\n{textwrap.indent(self.traceback, "    ")}"
+
+
 class TestReceiver:
     """Class for receiving and executing GUI test commands."""
 
     def __init__(
-        self, func: Callable, command_queue: mp.Queue, result_queue: mp.Queue,
+        self,
+        func: Callable,
+        command_queue: mp.Queue,
+        result_queue: mp.Queue,
     ) -> None:
         """
         Initialize the TestReceiver.
@@ -44,6 +59,9 @@ class TestReceiver:
             self.result_queue.put(result)
         except queue.Empty:
             pass
+        except Exception as e:
+            exception = ReceiverError(str(e), traceback.format_exc())
+            self.result_queue.put(exception)
 
     def _execute_command(self, command: str | tuple) -> Any:
         """
