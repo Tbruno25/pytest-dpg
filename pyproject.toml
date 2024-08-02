@@ -45,5 +45,4 @@ allow-direct-references = true
 packages = ["src/pytest_dpg"]
 
 [tool.ruff.lint]
-select = ["ALL"]
-ignore = ["D", "EM102", "ANN401", "TRY003"]
+extend-select = ["A", "B", "I", "N", "W"]

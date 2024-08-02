@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.5.5
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args:
+          - --fix
+          - --exit-non-zero-on-fix
+          # Rules E & F applied by default
+          # https://github.com/charliermarsh/ruff/blob/main/README.md#supported-rules
+          - --extend-select=A,B,I,N,W
+      # Run the formatter.
+      - id: ruff-format
