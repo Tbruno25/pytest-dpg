@@ -104,6 +104,10 @@ class TestReceiver:
         button = get_item_with_or_near_text(DPGItem.BUTTON, label)
         return self.click(button)
 
+    def click_header(self, label: str) -> None:
+        header = get_item_with_or_near_text([DPGItem.COLLAPSING_HEADER], label)
+        return self.click(header)
+
     def click_tab(self, label: str) -> None:
         """
         Click a tab with the given label.

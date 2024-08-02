@@ -1,6 +1,7 @@
 import functools
 import operator
 from collections import defaultdict
+from collections.abc import Collection
 from enum import Enum
 
 import dearpygui.dearpygui as dpg
@@ -10,15 +11,14 @@ class DPGItem(Enum):
     """Enum representing different DPG item types."""
 
     BUTTON = "mvAppItemType::mvButton"
+    COLLAPSING_HEADER = "mvAppItemType::mvCollapsingHeader"
     GROUP = "mvAppItemType::mvGroup"
-    TAB = "mvAppItemType::mvTab"
     SLIDER = "mvAppItemType::mvSliderInt"
-
+    TAB = "mvAppItemType::mvTab"
 
 def get_window_position() -> tuple[int, int]:
     """Get the top, left position of window."""
     return dpg.get_viewport_pos()
-
 
 def get_item_min_position(item: int) -> tuple[int, int]:
     """
@@ -104,7 +104,7 @@ def get_item_children(item: int) -> list:
     return functools.reduce(operator.iadd, dic.values(), [])
 
 
-def get_item_with_or_near_text(item_type: DPGItem, text: str) -> int:
+def get_item_with_or_near_text(item_types: DPGItem | Collection[DPGItem], text: str) -> int:
     """
     Find a DPG item of a specific type with or near the given text.
 
@@ -121,17 +121,18 @@ def get_item_with_or_near_text(item_type: DPGItem, text: str) -> int:
     matching_types = []
     indirect_matches = []
 
+    if isinstance(item_types, DPGItem):
+        item_types = [item_types]
+
     for item in dpg.get_all_items():
         current_type = dpg.get_item_type(item)
         current_label = dpg.get_item_label(item)
         current_value = dpg.get_value(item)
 
-        if current_type == item_type and current_label == text:
-            # Direct match found
-            return item
-
-        if current_type == item_type:
-            # Potential direct match (in case text is found later)
+        if current_type in [i.value for i in item_types]:
+            if current_label == text:
+                # Direct match found
+                return item
             matching_types.append(item)
 
         if text in [current_label, current_value]:
@@ -145,8 +146,8 @@ def get_item_with_or_near_text(item_type: DPGItem, text: str) -> int:
                     return child
 
     raise KeyError(
-        f"Unable to find '{item_type}' with text '{text}' directly or indirectly",
-        )
+        f"Unable to find item with text '{text}' directly or indirectly",
+    )
 
 
 def get_item_center_position(item: int) -> tuple[int, int]:

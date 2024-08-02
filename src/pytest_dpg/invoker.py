@@ -73,6 +73,9 @@ class TestInvoker:
         """
         return self._send_command(("click_button", label))
 
+    def click_header(self, label: str) -> None:
+        return self._send_command(("click_header", label))
+
     def click_tab(self, label: str) -> None:
         """
         Click a tab with the given label.
