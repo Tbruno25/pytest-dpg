@@ -78,9 +78,10 @@ While pytest-dpg aims to provide a robust testing solution for DearPyGui applica
 - **Limited Application Support:**
 only applications that utilize `dpg.start_dearpygui()` are curently supported
 - **Limited Widget Support:** ***only*** the following widgets are currently supported
-    - regular buttons
-    - horizontal sliders
-    - tabs
+    - regular button
+    - horizontal slider
+    - tab
+    - collapsible header
 
 - **Complex Layouts:** Very complex or dynamically changing layouts might pose challenges for element identification and interaction.
 
