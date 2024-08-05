@@ -1,9 +1,7 @@
 [project]
 name = "pytest-dpg"
-version = "0.1.1"
-description = """
-pytest-dpg is a pytest plugin for testing Dear PyGui (DPG) applications. \
-"""
+version = "0.1.2"
+description = "pytest-dpg is a pytest plugin for testing Dear PyGui (DPG) applications"
 authors = [
     { name = "TJ", email = "tbruno25@gmail.com" }
 ]
@@ -13,7 +11,7 @@ dependencies = [
     "multiprocess>=0.70.16",
 ]
 readme = "README.md"
-requires-python = ">=3.10, <4.0"
+requires-python = ">=3.10"
 classifiers = [
     "Framework :: Pytest",
     "Operating System :: OS Independent",
