@@ -4,7 +4,7 @@ from typing import Any
 
 import multiprocess as mp
 
-from pytest_dpg.receiver import TestReceiver
+from pytest_dpg.receiver import ReceiverError, TestReceiver
 
 
 class TestInvoker:
@@ -34,7 +34,13 @@ class TestInvoker:
             msg = "Must run set_target() method before starting"
             raise RuntimeError(msg)
         self._receiver.command_queue.put(command)
-        return self._receiver.result_queue.get()
+        result = self._receiver.result_queue.get()
+
+        if isinstance(result, ReceiverError):
+            print(f"Exception occurred in GUI process:\n{result}")
+            raise result
+
+        return result
 
     def set_target(self, func: Callable) -> None:
         """

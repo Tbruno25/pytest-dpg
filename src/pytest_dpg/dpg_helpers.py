@@ -16,9 +16,11 @@ class DPGItem(Enum):
     SLIDER = "mvAppItemType::mvSliderInt"
     TAB = "mvAppItemType::mvTab"
 
+
 def get_window_position() -> tuple[int, int]:
     """Get the top, left position of window."""
     return dpg.get_viewport_pos()
+
 
 def get_item_min_position(item: int) -> tuple[int, int]:
     """
@@ -104,19 +106,21 @@ def get_item_children(item: int) -> list:
     return functools.reduce(operator.iadd, dic.values(), [])
 
 
-def get_item_with_or_near_text(item_types: DPGItem | Collection[DPGItem], text: str) -> int:
+def get_item_with_or_near_text(
+    item_types: DPGItem | Collection[DPGItem], text: str
+) -> int:
     """
     Find a DPG item of a specific type with or near the given text.
 
     Args:
-        item_type: The type of DPG item to search for.
+        item_types: The type of DPG items to search for.
         text: The text to search for in the item's label or value.
 
     Returns:
         The ID of the matching DPG item.
 
     Raises:
-        KeyError: If no matching item is found.
+        RuntimeError: If no matching item is found.
     """
     matching_types = []
     indirect_matches = []
@@ -145,8 +149,8 @@ def get_item_with_or_near_text(item_types: DPGItem | Collection[DPGItem], text: 
                 if child in matching_types:
                     return child
 
-    raise KeyError(
-        f"Unable to find item with text '{text}' directly or indirectly",
+    raise RuntimeError(
+        f"Unable to find '{[i.name for i in item_types]}' with text '{text}' directly or indirectly",
     )
 
 
