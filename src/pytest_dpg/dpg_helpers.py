@@ -16,12 +16,12 @@ class DPGItem(Enum):
     SLIDER = "mvAppItemType::mvSliderInt"
     TAB = "mvAppItemType::mvTab"
 
-
+    
 def get_window_position() -> tuple[int, int]:
     """Get the top, left position of window."""
     return dpg.get_viewport_pos()
 
-
+  
 def get_item_min_position(item: int) -> tuple[int, int]:
     """
     Get the minimum position of a DPG item.
@@ -151,9 +151,8 @@ def get_item_with_or_near_text(
 
     raise RuntimeError(
         f"Unable to find '{[i.name for i in item_types]}' with text '{text}' directly or indirectly",
-    )
 
-
+      
 def get_item_center_position(item: int) -> tuple[int, int]:
     """
     Get the center position of a DPG item.
