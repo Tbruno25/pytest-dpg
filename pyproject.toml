@@ -12,16 +12,29 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">=3.10"
+keywords = [
+    "dpg",
+    "dearpygui",
+]
 classifiers = [
     "Framework :: Pytest",
     "Operating System :: OS Independent",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: User Interfaces",
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: Utilities",
 ]
+
+
+[project.urls]
+repository = "https://github.com/tbruno25/pytest-dpg"
+
 
 [build-system]
 requires = ["hatchling"]
