@@ -21,13 +21,21 @@ from pytest_dpg.dpg_helpers import (
 
 
 class ReceiverError(Exception):
+    """Custom exception class for errors in the TestReceiver."""
+
     def __init__(self, message: str, traceback: str | None = None):
         self.message = message
         self.traceback = traceback
         super().__init__(self.message)
 
     def __str__(self):
-        return f"{self.message}\n\nOriginal traceback:\n{textwrap.indent(self.traceback, "    ")}"
+        """
+        Return a string representation of the error.
+
+        Returns:
+            str: The formatted error message with traceback.
+        """
+        return f"{self.message}\n\nOriginal traceback:\n{textwrap.indent(self.traceback, '    ')}"
 
 
 class TestReceiver:
@@ -39,14 +47,6 @@ class TestReceiver:
         command_queue: mp.Queue,
         result_queue: mp.Queue,
     ) -> None:
-        """
-        Initialize the TestReceiver.
-
-        Args:
-            func: The function that initializes the GUI to be tested.
-            command_queue: A multiprocessing Queue for receiving commands.
-            result_queue: A multiprocessing Queue for sending results.
-        """
         self._func = func
         self.command_queue = command_queue
         self.result_queue = result_queue
@@ -123,14 +123,32 @@ class TestReceiver:
         return self.click(button)
 
     def click_combo(self, label: str) -> None:
+        """
+        Click a combo box with the given label.
+
+        Args:
+            label (str): The label of the combo box to click.
+        """
         combo = get_item_with_or_near_text([DPGItem.COMBO], label)
         return self.click(combo)
 
     def click_header(self, label: str) -> None:
+        """
+        Click a collapsing header with the given label.
+
+        Args:
+            label (str): The label of the collapsing header to click.
+        """
         header = get_item_with_or_near_text([DPGItem.COLLAPSING_HEADER], label)
         return self.click(header)
 
     def click_input_text(self, label: str) -> None:
+        """
+        Click an input text box with the given label.
+
+        Args:
+            label (str): The label of the input text box to click.
+        """
         input_text = get_item_with_or_near_text([DPGItem.INPUT_TEXT], label)
         return self.click(input_text)
 
@@ -159,6 +177,16 @@ class TestReceiver:
         return ClickAndDrag(target_x, target_y).execute()
 
     def set_combo(self, label: str, value: str) -> None:
+        """
+        Set the value of a combo box with the given label.
+
+        Args:
+            label (str): The label of the combo box to set.
+            value (str): The value to set in the combo box.
+
+        Raises:
+            ValueError: If the given value is not in the combo box options.
+        """
         combo = get_item_with_or_near_text([DPGItem.COMBO], label)
         options = get_item_options(combo)
         if value not in options:
@@ -166,5 +194,12 @@ class TestReceiver:
         return dpg.set_value(combo, value)
 
     def set_input_text(self, label: str, text: str) -> None:
+        """
+        Set the text of an input text box with the given label.
+
+        Args:
+            label (str): The label of the input text box to set.
+            text (str): The text to set in the input text box.
+        """
         self.click_input_text(label)
         return pyautogui.write(text)
