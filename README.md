@@ -82,6 +82,8 @@ only applications that utilize `dpg.start_dearpygui()` are curently supported
     - horizontal slider
     - tab
     - collapsible header
+    - text input box
+    - combo box
 
 - **Complex Layouts:** Very complex or dynamically changing layouts might pose challenges for element identification and interaction.
 
