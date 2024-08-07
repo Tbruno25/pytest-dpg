@@ -11,7 +11,6 @@ class TestInvoker:
     """Class for invoking GUI tests and managing the test process."""
 
     def __init__(self) -> None:
-        """Initialize the TestInvoker."""
         self._command_queue: mp.Queue = mp.Queue()
         self._result_queue: mp.Queue = mp.Queue()
         self._process: mp.Process | None = None
@@ -80,12 +79,30 @@ class TestInvoker:
         return self._send_command(("click_button", label))
 
     def click_combo(self, label: str) -> None:
+        """
+        Click a combo box with the given label.
+
+        Args:
+            label: The label of the combo box to click.
+        """
         return self._send_command(("click_combo", label))
 
     def click_header(self, label: str) -> None:
+        """
+        Click a collapsing header with the given label.
+
+        Args:
+            label: The label of the collapsing header to click.
+        """
         return self._send_command(("click_header", label))
 
     def click_input_text(self, label: str) -> None:
+        """
+        Click an input text box with the given label.
+
+        Args:
+            label: The label of the input text box to click.
+        """
         return self._send_command(("click_input_text", label))
 
     def click_tab(self, label: str) -> None:
@@ -108,7 +125,21 @@ class TestInvoker:
         return self._send_command(("drag_slider", label, value))
 
     def set_combo(self, label: str, value: str) -> None:
+        """
+        Set the value of a combo box with the given label.
+
+        Args:
+            label: The label of the combo box to set.
+            value: The value to set in the combo box.
+        """
         return self._send_command(("set_combo", label, value))
 
     def set_input_text(self, label: str, text: str) -> None:
+        """
+        Set the text of an input text box with the given label.
+
+        Args:
+            label: The label of the input text box to set.
+            text: The text to set in the input text box.
+        """
         return self._send_command(("set_input_text", label, text))
