@@ -11,6 +11,7 @@ class DPGItem(Enum):
     """Enum representing different DPG item types."""
 
     BUTTON = "mvAppItemType::mvButton"
+    COMBO = "mvAppItemType::mvCombo"
     COLLAPSING_HEADER = "mvAppItemType::mvCollapsingHeader"
     GROUP = "mvAppItemType::mvGroup"
     INPUT_TEXT = "mvAppItemType::mvInputText"
@@ -49,19 +50,6 @@ def get_item_max_position(item: int) -> tuple[int, int]:
     """
     x, y = dpg.get_item_rect_max(item)
     return x - 1, y - 1
-
-
-def get_item_value(item: int) -> int:
-    """
-    Get the value of a DPG item.
-
-    Args:
-        item: The ID of the DPG item.
-
-    Returns:
-        The value of the item.
-    """
-    return dpg.get_value(item)
 
 
 def get_item_value_boundaries(item: int) -> tuple[int, int]:
@@ -105,6 +93,10 @@ def get_item_children(item: int) -> list:
     """
     dic = dpg.get_item_children(item)
     return functools.reduce(operator.iadd, dic.values(), [])
+
+
+def get_item_options(item: int) -> list:
+    return dpg.get_item_configuration(item)["items"]
 
 
 def get_item_with_or_near_text(
