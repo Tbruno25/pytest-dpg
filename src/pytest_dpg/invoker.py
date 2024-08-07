@@ -79,6 +79,9 @@ class TestInvoker:
         """
         return self._send_command(("click_button", label))
 
+    def click_combo(self, label: str) -> None:
+        return self._send_command(("click_combo", label))
+
     def click_header(self, label: str) -> None:
         return self._send_command(("click_header", label))
 
@@ -103,6 +106,9 @@ class TestInvoker:
             value: The value to drag the slider to.
         """
         return self._send_command(("drag_slider", label, value))
+
+    def set_combo(self, label: str, value: str) -> None:
+        return self._send_command(("set_combo", label, value))
 
     def set_input_text(self, label: str, text: str) -> None:
         return self._send_command(("set_input_text", label, text))

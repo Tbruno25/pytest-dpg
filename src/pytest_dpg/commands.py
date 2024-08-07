@@ -20,11 +20,12 @@ class Command(ABC):
 class MouseMove(Command):
     """Command to move the mouse to a specific position."""
 
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, relative: bool = False) -> None:
         self.x, self.y = x, y
+        self.cmd = pyautogui.moveRel if relative else pyautogui.moveTo
 
     def command(self) -> None:
-        pyautogui.moveTo(self.x, self.y)
+        self.cmd(self.x, self.y)
 
 
 class MouseDown(Command):

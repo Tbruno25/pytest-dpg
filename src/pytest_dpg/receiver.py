@@ -14,7 +14,7 @@ from pytest_dpg.commands import ClickAndDrag, ClickAndReturn, MouseMove
 from pytest_dpg.dpg_helpers import (
     DPGItem,
     get_item_center_position,
-    get_item_value,
+    get_item_options,
     get_item_with_or_near_text,
     get_slider_position,
 )
@@ -122,14 +122,17 @@ class TestReceiver:
         button = get_item_with_or_near_text(DPGItem.BUTTON, label)
         return self.click(button)
 
+    def click_combo(self, label: str) -> None:
+        combo = get_item_with_or_near_text([DPGItem.COMBO], label)
+        return self.click(combo)
+
     def click_header(self, label: str) -> None:
         header = get_item_with_or_near_text([DPGItem.COLLAPSING_HEADER], label)
         return self.click(header)
 
     def click_input_text(self, label: str) -> None:
         input_text = get_item_with_or_near_text([DPGItem.INPUT_TEXT], label)
-        x, y = get_item_center_position(input_text)
-        ClickAndReturn(x, y).execute()
+        return self.click(input_text)
 
     def click_tab(self, label: str) -> None:
         """
@@ -150,11 +153,18 @@ class TestReceiver:
             value: The value to drag the slider to.
         """
         slider = get_item_with_or_near_text(DPGItem.SLIDER, label)
-        curr_x, curr_y = get_slider_position(slider, get_item_value(slider))
+        curr_x, curr_y = get_slider_position(slider, dpg.get_value(slider))
         target_x, target_y = get_slider_position(slider, value)
         MouseMove(curr_x, curr_y).execute()
         return ClickAndDrag(target_x, target_y).execute()
 
+    def set_combo(self, label: str, value: str) -> None:
+        combo = get_item_with_or_near_text([DPGItem.COMBO], label)
+        options = get_item_options(combo)
+        if value not in options:
+            raise ValueError(f"Value '{value}' not in ComboBox: {options}")
+        return dpg.set_value(combo, value)
+
     def set_input_text(self, label: str, text: str) -> None:
         self.click_input_text(label)
-        pyautogui.write(text)
+        return pyautogui.write(text)
