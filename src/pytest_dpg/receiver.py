@@ -126,6 +126,11 @@ class TestReceiver:
         header = get_item_with_or_near_text([DPGItem.COLLAPSING_HEADER], label)
         return self.click(header)
 
+    def click_input_text(self, label: str) -> None:
+        input_text = get_item_with_or_near_text([DPGItem.INPUT_TEXT], label)
+        x, y = get_item_center_position(input_text)
+        ClickAndReturn(x, y).execute()
+
     def click_tab(self, label: str) -> None:
         """
         Click a tab with the given label.
@@ -149,3 +154,7 @@ class TestReceiver:
         target_x, target_y = get_slider_position(slider, value)
         MouseMove(curr_x, curr_y).execute()
         return ClickAndDrag(target_x, target_y).execute()
+
+    def set_input_text(self, label: str, text: str) -> None:
+        self.click_input_text(label)
+        pyautogui.write(text)

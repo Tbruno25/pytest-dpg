@@ -13,6 +13,7 @@ class DPGItem(Enum):
     BUTTON = "mvAppItemType::mvButton"
     COLLAPSING_HEADER = "mvAppItemType::mvCollapsingHeader"
     GROUP = "mvAppItemType::mvGroup"
+    INPUT_TEXT = "mvAppItemType::mvInputText"
     SLIDER = "mvAppItemType::mvSliderInt"
     TAB = "mvAppItemType::mvTab"
 

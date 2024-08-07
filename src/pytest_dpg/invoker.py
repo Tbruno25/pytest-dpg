@@ -82,6 +82,9 @@ class TestInvoker:
     def click_header(self, label: str) -> None:
         return self._send_command(("click_header", label))
 
+    def click_input_text(self, label: str) -> None:
+        return self._send_command(("click_input_text", label))
+
     def click_tab(self, label: str) -> None:
         """
         Click a tab with the given label.
@@ -100,3 +103,6 @@ class TestInvoker:
             value: The value to drag the slider to.
         """
         return self._send_command(("drag_slider", label, value))
+
+    def set_input_text(self, label: str, text: str) -> None:
+        return self._send_command(("set_input_text", label, text))
